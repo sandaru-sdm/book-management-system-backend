@@ -211,9 +211,3 @@ Feel free to open issues for suggestions or bugs.
 For questions, reach out via GitHub Issues.
 
 ---
-
-## 📝 Prompt
-
-<prompt>
-update the readme.md file
-</prompt>
