@@ -43,8 +43,13 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public BookResponseDto getBookById(Long id) {
+    public List<BookResponseDto> getBooksByPublishedDate(LocalDate fromDate, LocalDate toDate) {
+        List<BookEntity> books = bookRepository.findByPublicationDateBetween(fromDate, toDate);
+        return books.stream().map(this::convertToBookResponse).collect(Collectors.toList());
+    }
 
+    @Override
+    public BookResponseDto getBookById(Long id) {
         BookEntity book = bookRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book not found for id : " + id));
         return convertToBookResponse(book);
     }
