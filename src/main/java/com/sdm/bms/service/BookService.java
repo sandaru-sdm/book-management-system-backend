@@ -4,6 +4,7 @@ import com.sdm.bms.dto.BookRequestDto;
 import com.sdm.bms.dto.BookResponseDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface BookService {
@@ -16,4 +17,6 @@ public interface BookService {
     BookResponseDto updateBook(Long id, BookRequestDto requestDto);
 
     void deleteBook(Long id);
+
+    List<BookResponseDto> getBooksByPublishedDate(LocalDate fromDate, LocalDate toDate);
 }
