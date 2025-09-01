@@ -48,8 +48,6 @@ public class BookController {
         return ResponseEntity.ok().body("Book deleted Successfully");
     }
 
-//    http://localhost:8080/api/v1/books?fromDate=2025-05-21&toDate=2025-08-23
-
     @GetMapping("/books/by-date")
     public ResponseEntity<List<BookResponseDto>> getBookByPublishedDate(@RequestParam LocalDate fromDate, @RequestParam LocalDate toDate) {
         List<BookResponseDto> books = bookService.getBooksByPublishedDate(fromDate,toDate);
