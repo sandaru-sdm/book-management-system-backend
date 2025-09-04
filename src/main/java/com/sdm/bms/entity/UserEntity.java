@@ -6,8 +6,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "user")
@@ -27,4 +29,7 @@ public class UserEntity {
     @Column(updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate deletedAt;
 }
