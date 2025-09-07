@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
@@ -24,6 +27,12 @@ public class UserServiceImpl implements UserService{
        UserEntity newUser = convertToUserEntity(requestDto);
        newUser = userRepository.save(newUser);
        return convertToUserResponse(newUser);
+    }
+
+    @Override
+    public List<UserResponseDto> getAllUsers() {
+        List<UserEntity> users = userRepository.findAll();
+        return users.stream().map(this::convertToUserResponse).collect(Collectors.toList());
     }
 
     private UserResponseDto convertToUserResponse(UserEntity newUser) {
