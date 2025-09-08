@@ -4,6 +4,7 @@ import com.sdm.bms.dto.UserRequestDto;
 import com.sdm.bms.dto.UserResponseDto;
 import com.sdm.bms.entity.UserEntity;
 import com.sdm.bms.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,12 @@ public class UserServiceImpl implements UserService{
     public List<UserResponseDto> getAllUsers() {
         List<UserEntity> users = userRepository.findAll();
         return users.stream().map(this::convertToUserResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserResponseDto getUserById(Long id) {
+        UserEntity user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found for id: " + id));
+        return convertToUserResponse(user);
     }
 
     private UserResponseDto convertToUserResponse(UserEntity newUser) {
