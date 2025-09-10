@@ -1,5 +1,7 @@
 package com.sdm.bms.controller;
 
+import com.sdm.bms.dto.BookRequestDto;
+import com.sdm.bms.dto.BookResponseDto;
 import com.sdm.bms.dto.UserRequestDto;
 import com.sdm.bms.dto.UserResponseDto;
 import com.sdm.bms.service.UserService;
@@ -32,5 +34,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto) {
+        UserResponseDto updatedUser = userService.updateUser(id, requestDto);
+        return ResponseEntity.ok().body(updatedUser);
     }
 }
