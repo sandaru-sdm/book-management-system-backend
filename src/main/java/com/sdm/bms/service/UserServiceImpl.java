@@ -42,6 +42,18 @@ public class UserServiceImpl implements UserService{
         return convertToUserResponse(user);
     }
 
+    @Override
+    public UserResponseDto updateUser(Long id, UserRequestDto requestDto) {
+
+        UserEntity existUser = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found for ID : " + id));
+
+        existUser.setName(requestDto.getName());
+        existUser.setEmail(requestDto.getEmail());
+
+        UserEntity updatedUser = userRepository.save(existUser);
+        return convertToUserResponse(updatedUser);
+    }
+
     private UserResponseDto convertToUserResponse(UserEntity newUser) {
         return UserResponseDto.builder()
                 .id(newUser.getId())
