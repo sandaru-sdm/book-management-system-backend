@@ -1,7 +1,5 @@
 package com.sdm.bms.controller;
 
-import com.sdm.bms.dto.BookRequestDto;
-import com.sdm.bms.dto.BookResponseDto;
 import com.sdm.bms.dto.UserRequestDto;
 import com.sdm.bms.dto.UserResponseDto;
 import com.sdm.bms.service.UserService;
@@ -40,5 +38,11 @@ public class UserController {
     public ResponseEntity<UserResponseDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDto requestDto) {
         UserResponseDto updatedUser = userService.updateUser(id, requestDto);
         return ResponseEntity.ok().body(updatedUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok().body("User deleted Successfully");
     }
 }
