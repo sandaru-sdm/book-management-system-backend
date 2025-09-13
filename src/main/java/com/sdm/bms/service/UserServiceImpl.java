@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,18 @@ public class UserServiceImpl implements UserService{
 
         UserEntity updatedUser = userRepository.save(existUser);
         return convertToUserResponse(updatedUser);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        UserEntity existingUser = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found for id:" + id));
+
+        if (existingUser.getDeletedAt() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with ID: " + id + " is already deleted");
+        }
+
+        existingUser.setDeletedAt(LocalDate.now());
+        userRepository.save(existingUser);
     }
 
     private UserResponseDto convertToUserResponse(UserEntity newUser) {
