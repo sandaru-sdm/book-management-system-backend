@@ -1,15 +1,16 @@
 # 📚 Book Management System Backend
 
-Spring Boot backend for book management system.
+Spring Boot backend for book and user management system.
 
 ---
 
 ## 🚀 Features
 
 - Add, update, delete, and list books
-- Soft delete support
-- Validation for book data
-- RESTful API
+- Add, update, delete, and list users
+- Soft delete support for books and users
+- Validation for book and user data
+- RESTful API for books and users
 - CORS configuration for frontend integration
 
 ---
@@ -63,7 +64,9 @@ The backend will start at [http://localhost:8080](http://localhost:8080).
 
 Base URL: `/api/v1`
 
-### ➕ Create Book
+### 📚 Book Endpoints
+
+#### ➕ Create Book
 
 - **POST** `/books`
 - **Body:**  
@@ -76,7 +79,7 @@ Base URL: `/api/v1`
   }
   ```
 - **Response:**  
-  `200 OK`  
+  `201 Created`  
   ```json
   {
     "id": 1,
@@ -87,7 +90,7 @@ Base URL: `/api/v1`
   }
   ```
 
-### 📚 Get All Books
+#### 📚 Get All Books
 
 - **GET** `/books`
 - **Response:**  
@@ -104,7 +107,7 @@ Base URL: `/api/v1`
   ]
   ```
 
-### 🔍 Get Book By ID
+#### 🔍 Get Book By ID
 
 - **GET** `/books/{id}`
 - **Response:**  
@@ -119,7 +122,7 @@ Base URL: `/api/v1`
   }
   ```
 
-### ✏️ Update Book
+#### ✏️ Update Book
 
 - **PUT** `/books/{id}`
 - **Body:**  
@@ -143,12 +146,110 @@ Base URL: `/api/v1`
   }
   ```
 
-### 🗑️ Delete Book
+#### 🗑️ Delete Book (Soft Delete)
 
 - **DELETE** `/books/{id}`
 - **Response:**  
   `200 OK`  
   `"Book deleted Successfully"`
+
+#### 📅 Get Books By Published Date
+
+- **GET** `/books/by-date?fromDate=2024-01-01&toDate=2024-12-31`
+- **Response:**  
+  `200 OK`  
+  ```json
+  [
+    {
+      "id": 1,
+      "title": "Book Title",
+      "author": "Author Name",
+      "isbn": "1234567890",
+      "publicationDate": "2024-06-01"
+    }
+  ]
+  ```
+
+---
+
+### 👤 User Endpoints
+
+#### ➕ Create User
+
+- **POST** `/user`
+- **Body:**  
+  ```json
+  {
+    "name": "User Name",
+    "email": "user@example.com",
+    "password": "password123"
+  }
+  ```
+- **Response:**  
+  `201 Created`  
+  ```json
+  {
+    "id": 1,
+    "name": "User Name",
+    "email": "user@example.com"
+  }
+  ```
+
+#### 👥 Get All Users
+
+- **GET** `/user`
+- **Response:**  
+  `200 OK`  
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "User Name",
+      "email": "user@example.com"
+    }
+  ]
+  ```
+
+#### 🔍 Get User By ID
+
+- **GET** `/user/{id}`
+- **Response:**  
+  `200 OK`  
+  ```json
+  {
+    "id": 1,
+    "name": "User Name",
+    "email": "user@example.com"
+  }
+  ```
+
+#### ✏️ Update User
+
+- **PUT** `/user/{id}`
+- **Body:**  
+  ```json
+  {
+    "name": "Updated Name",
+    "email": "updated@example.com",
+    "password": "newpassword"
+  }
+  ```
+- **Response:**  
+  `200 OK`  
+  ```json
+  {
+    "id": 1,
+    "name": "Updated Name",
+    "email": "updated@example.com"
+  }
+  ```
+
+#### 🗑️ Delete User (Soft Delete)
+
+- **DELETE** `/user/{id}`
+- **Response:**  
+  `200 OK`  
+  `"User deleted Successfully"`
 
 ---
 
@@ -187,7 +288,7 @@ Sandaru Gunathilake
 
 ## 🌐 CORS
 
-CORS is enabled for `http://localhost:5173` (see `WebConfig.java`).
+CORS is enabled for `http://localhost:5173` (see [`config.WebConfig`](src/main/java/com/sdm/bms/config/WebConfig.java)).
 
 ---
 
