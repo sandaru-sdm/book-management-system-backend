@@ -18,4 +18,8 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 //    List<BookEntity> findPublicationDateBetween(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
 
     List<BookEntity> findByPublicationDateBetween(LocalDate fromDate, LocalDate toDate);
+
+    @Query("SELECT b FROM BookEntity b WHERE b.deletedAt IS NULL")
+    List<BookEntity> findAllActiveBooks();
+
 }
