@@ -19,4 +19,6 @@ public interface BookService {
     void deleteBook(Long id);
 
     List<BookResponseDto> getBooksByPublishedDate(LocalDate fromDate, LocalDate toDate);
+
+    List<BookResponseDto> findAllActiveBooks();
 }
