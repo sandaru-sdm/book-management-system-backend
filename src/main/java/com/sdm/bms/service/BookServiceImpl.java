@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
 
     @Override
     public BookResponseDto createBook(BookRequestDto request) {
-        if(bookRepository.existsByIsbn(request.getIsbn())) {
+        if (bookRepository.existsByIsbn(request.getIsbn())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Isbn already exists");
         }
 
-        if(request.getTitle().isEmpty()) {
+        if (request.getTitle().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Title is empty");
         }
 
@@ -46,6 +46,14 @@ public class BookServiceImpl implements BookService{
     public List<BookResponseDto> getBooksByPublishedDate(LocalDate fromDate, LocalDate toDate) {
         List<BookEntity> books = bookRepository.findByPublicationDateBetween(fromDate, toDate);
         return books.stream().map(this::convertToBookResponse).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookResponseDto> findAllActiveBooks() {
+        return bookRepository.findAllActiveBooks()
+                .stream()
+                .map(this::convertToBookResponse)
+                .toList();
     }
 
     @Override
