@@ -67,6 +67,15 @@ public class UserServiceImpl implements UserService{
         userRepository.save(existingUser);
     }
 
+    @Override
+    public List<UserResponseDto> getAllActiveUsers() {
+        return userRepository.findAllActiveUsers()
+                .stream()
+                .map(this::convertToUserResponse)
+                .toList();
+    }
+
+
     private UserResponseDto convertToUserResponse(UserEntity newUser) {
         return UserResponseDto.builder()
                 .id(newUser.getId())
